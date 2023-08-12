@@ -13,6 +13,8 @@ const SignIn = () => {
     const formProps = Object.fromEntries(formData);
     login(formProps)
       .then((res) => {
+        console.log(res);
+        localStorage.setItem("authorization", res.data.token);
         console.log("success");
       })
       .catch((err) => {
@@ -43,7 +45,7 @@ const SignIn = () => {
             type="email"
             sx={{ mb: 3, width: "600px" }}
             width="800px"
-            name="email"
+            name="username"
           />
           <TextField
             label="Password"

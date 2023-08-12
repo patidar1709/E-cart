@@ -3,7 +3,7 @@ import { TextField, Button } from "@mui/material";
 import LockIcon from "../../common/LockIcon";
 import CustomButton from "../../common/CustomButton";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { signUp } from "../../apis/apis";
 
 const SignUp = () => {
   //function to call post api to signup user when form is submitted
@@ -12,8 +12,7 @@ const SignUp = () => {
     const data = new FormData(e.target);
     const payload = Object.fromEntries(data);
     payload.role = ["USER"];
-    axios
-      .post("http://localhost:8080/api/auth/signup", payload)
+    signUp(payload)
       .then((res) => {
         console.log(res);
       })

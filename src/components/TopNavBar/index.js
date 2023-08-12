@@ -65,15 +65,15 @@ const TopNavBar = () => {
         <ShoppingCartIcon />
         <Typography className="padding">upGrad E-shop</Typography>
         <div className="centeredSearch">
-          {/* <Search>
+          <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
-          </Search> */}
+          </Search>
         </div>
         <div className="rightAlign">
           <Link to="/login">
@@ -86,10 +86,17 @@ const TopNavBar = () => {
               <div className="button">Sign Up</div>
             </Button>
           </Link>
-          {/* <Button variant="text"><div className='button'>Home</div></Button>
-        
-        <Button variant="text"><div className='button'>Add Products</div></Button>
-        <ColorButton variant="contained">Logout</ColorButton> */}
+          <Link to="/home">
+            <Button variant="text">
+              <div className="button">Home</div>
+            </Button>
+          </Link>
+          <Link to="/add/product">
+            <Button variant="text">
+              <div className="button">Add Products</div>
+            </Button>
+          </Link>
+          <ColorButton variant="contained">Logout</ColorButton>
         </div>
       </Toolbar>
     </AppBar>

@@ -1,0 +1,8 @@
+.div {
+    display: flex;
+    align-content: space-between;
+}
+
+.rightAlign {
+    margin-left: auto;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppBar } from "@material-ui/core";
 import { styled, alpha } from "@mui/material/styles";
@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { pink } from "@mui/material/colors";
 import { Link } from "react-router-dom";
+import { IsUserLoogedIn } from "../../common/IsUserLoogedIn";
 import "./index.css";
 
 const Search = styled("div")(({ theme }) => ({
@@ -59,6 +60,8 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 const TopNavBar = () => {
+  const userLoggedIn = IsUserLoogedIn();
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -76,27 +79,34 @@ const TopNavBar = () => {
           </Search>
         </div>
         <div className="rightAlign">
-          <Link to="/login">
-            <Button variant="text">
-              <div className="button">Login</div>
-            </Button>
-          </Link>
-          <Link to="/signUp">
-            <Button variant="text">
-              <div className="button">Sign Up</div>
-            </Button>
-          </Link>
-          <Link to="/home">
-            <Button variant="text">
-              <div className="button">Home</div>
-            </Button>
-          </Link>
-          <Link to="/add/product">
-            <Button variant="text">
-              <div className="button">Add Products</div>
-            </Button>
-          </Link>
-          <ColorButton variant="contained">Logout</ColorButton>
+          {!userLoggedIn ? (
+            <>
+              <Link to="/login">
+                <Button variant="text">
+                  <div className="button">Login</div>
+                </Button>
+              </Link>
+              <Link to="/signUp">
+                <Button variant="text">
+                  <div className="button">Sign Up</div>
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/home">
+                <Button variant="text">
+                  <div className="button">Home</div>
+                </Button>
+              </Link>
+              <Link to="/add/product">
+                <Button variant="text">
+                  <div className="button">Add Products</div>
+                </Button>
+              </Link>
+              <ColorButton variant="contained">Logout</ColorButton>
+            </>
+          )}
         </div>
       </Toolbar>
     </AppBar>

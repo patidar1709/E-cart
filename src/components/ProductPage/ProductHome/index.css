@@ -5,9 +5,21 @@
     margin-top: 20px;
 }
 
+.filterDiv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-between;
+    margin-top: 20px;
+}
+
 .card {
     width: calc(33.33% - 10px);
     margin-bottom: 20px;
     padding: 10px;
     box-sizing: border-box;
+}
+
+.filter {
+    margin-left: 50px;
 }

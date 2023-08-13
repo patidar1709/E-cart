@@ -6,3 +6,20 @@
 .rightAlign {
     margin-left: auto;
 }
+
+.cardContent {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+.edit-delete-buttons {
+    margin-left: 120px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

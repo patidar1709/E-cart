@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import LockIcon from "../../common/LockIcon";
 import CustomButton from "../../common/CustomButton";
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 import { login } from "../../apis/apis";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   //calling login api to login user on click of singIn
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -13,9 +15,9 @@ const SignIn = () => {
     const formProps = Object.fromEntries(formData);
     login(formProps)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("authorization", res.data.token);
         console.log("success");
+        navigate("/home");
       })
       .catch((err) => {
         console.log("faliure");

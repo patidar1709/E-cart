@@ -39,3 +39,18 @@ export const productList = () => {
   const url = "/api/products";
   return api.get(url);
 };
+
+export const getProduct = (id) => {
+  const url = `/api/products/${id}`;
+  return api.get(url);
+};
+
+export const getAddress = () => {
+  const url = `/api/addresses`;
+  return api.get(url);
+};
+
+export const saveAddress = (payload) => {
+  const url = `/api/addresses`;
+  return api.post(url, payload);
+};

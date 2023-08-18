@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppBar } from "@material-ui/core";
 import { styled, alpha } from "@mui/material/styles";
@@ -61,6 +62,11 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 const TopNavBar = () => {
   const userLoggedIn = IsUserLoogedIn();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
 
   return (
     <AppBar position="static">
@@ -104,7 +110,9 @@ const TopNavBar = () => {
                   <div className="button">Add Products</div>
                 </Button>
               </Link>
-              <ColorButton variant="contained">Logout</ColorButton>
+              <ColorButton variant="contained" onClick={handleLogout}>
+                Logout
+              </ColorButton>
             </>
           )}
         </div>

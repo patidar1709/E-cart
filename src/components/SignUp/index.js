@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import LockIcon from "../../common/LockIcon";
 import CustomButton from "../../common/CustomButton";
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 import { signUp } from "../../apis/apis";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   //function to call post api to signup user when form is submitted
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ const SignUp = () => {
     signUp(payload)
       .then((res) => {
         console.log(res);
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);

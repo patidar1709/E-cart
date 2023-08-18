@@ -7,9 +7,11 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import "./index.css";
 
 const ProductCard = ({
+  id,
   imageUrl,
   name,
   price,
@@ -43,13 +45,15 @@ const ProductCard = ({
         </CardActionArea>
         <CardActions>
           <div className="button-container">
-            <Button
-              sx={{ color: "white", background: "#3f51b5" }}
-              size="small"
-              variant="contained"
-            >
-              BUY
-            </Button>
+            <Link to={`/detail/${id}`}>
+              <Button
+                sx={{ color: "white", background: "#3f51b5" }}
+                size="small"
+                variant="contained"
+              >
+                BUY
+              </Button>
+            </Link>
             <div className="edit-delete-buttons">
               <Button size="small">
                 <EditIcon sx={{ color: "grey" }} />

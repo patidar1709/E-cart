@@ -1,24 +1,33 @@
 // import logo from './logo.svg';
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import TopNavBar from "./components/TopNavBar";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import ProductCard from "./components/ProductPage/ProductCard";
+import ProductDetail from "./components/ProductPage/ProductDetail";
 import AddProduct from "./components/ProductPage/AddProduct";
 import HomePage from "./components/ProductPage/ProductHome";
+import BuyProduct from "./components/ProductPage/BuyProduct";
 
+//managin the basic routing of app
 function App() {
   return (
     <Router>
       <div className="App">
         <TopNavBar />
-        {/* <ProductCard /> */}
         <Routes>
           <Route path="/login" Component={SignIn} />
+          <Route exact path="/" element={<Navigate replace to="/login" />} />
           <Route path="/signUp" Component={SignUp} />
           <Route path="/add/product" Component={AddProduct} />
           <Route path="/home" Component={HomePage} />
+          <Route path="/detail/:id" Component={ProductDetail} />
+          <Route path="/order" Component={BuyProduct} />
           <Route path="*"> Something went wrong please contact admin </Route>
         </Routes>
       </div>

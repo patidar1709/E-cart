@@ -1,27 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import LockIcon from "../../common/LockIcon";
 import CustomButton from "../../common/CustomButton";
 import { Link } from "react-router-dom";
 import { signUp } from "../../apis/apis";
+import { useToast } from "../../common/useToast";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const toast = useToast();
+
+  //state variable to store password and confirm password fields
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   //function to call post api to signup user when form is submitted
   const handelSubmit = (e) => {
     e.preventDefault();
+
+    //if password and confirmPassword fields are not same
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
     const data = new FormData(e.target);
     const payload = Object.fromEntries(data);
     payload.role = ["USER"];
+    //calling signup api and showing success or error msg on basis of the response of Api
     signUp(payload)
       .then((res) => {
-        console.log(res);
         navigate("/login");
+        toast.showSuccess("User registerd successfully. Proceed to login");
       })
       .catch((err) => {
-        console.log(err);
+        toast.showSuccess(
+          "Some error occured while user registration. Please try again"
+        );
       });
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setPasswordError("");
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+    setPasswordError("");
   };
 
   return (
@@ -78,6 +105,8 @@ const SignUp = () => {
             color="secondary"
             type="password"
             name="password"
+            value={password}
+            onChange={handlePasswordChange}
             sx={{ mb: 3, width: "600px" }}
           />
           <TextField
@@ -87,6 +116,10 @@ const SignUp = () => {
             color="secondary"
             type="password"
             sx={{ mb: 3, width: "600px" }}
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+            error={passwordError !== ""}
+            helperText={passwordError}
             width="800px"
           />
           <TextField

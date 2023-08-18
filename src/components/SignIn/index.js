@@ -5,9 +5,13 @@ import LockIcon from "../../common/LockIcon";
 import CustomButton from "../../common/CustomButton";
 import { Link } from "react-router-dom";
 import { login } from "../../apis/apis";
+import { useToast } from "../../common/useToast";
 
+//sign In component to handel login of user
 const SignIn = () => {
   const navigate = useNavigate();
+  const toast = useToast();
+
   //calling login api to login user on click of singIn
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -15,12 +19,14 @@ const SignIn = () => {
     const formProps = Object.fromEntries(formData);
     login(formProps)
       .then((res) => {
+        //storing the auth token in locastorage to fetch it from anywhere
         localStorage.setItem("authorization", res.data.token);
-        console.log("success");
+        //redirecting user to home page once login is successfull
         navigate("/home");
+        toast.showSuccess("Logged in successfully");
       })
       .catch((err) => {
-        console.log("faliure");
+        toast.showError("Please check user credentails");
       });
   };
 
@@ -61,7 +67,7 @@ const SignIn = () => {
           <Button variant="contained" type="submit" style={{ width: "600px" }}>
             SIGN IN
           </Button>
-          <Link to="/signUp">
+          <Link to="/signup">
             <CustomButton
               variant="text"
               style={{

@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -13,17 +12,20 @@ import ProductDetail from "./components/ProductPage/ProductDetail";
 import AddProduct from "./components/ProductPage/AddProduct";
 import HomePage from "./components/ProductPage/ProductHome";
 import BuyProduct from "./components/ProductPage/BuyProduct";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //managin the basic routing of app
 function App() {
   return (
     <Router>
       <div className="App">
+        <ToastContainer />
         <TopNavBar />
         <Routes>
           <Route path="/login" Component={SignIn} />
           <Route exact path="/" element={<Navigate replace to="/login" />} />
-          <Route path="/signUp" Component={SignUp} />
+          <Route path="/signup" Component={SignUp} />
           <Route path="/add/product" Component={AddProduct} />
           <Route path="/home" Component={HomePage} />
           <Route path="/detail/:id" Component={ProductDetail} />

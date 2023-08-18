@@ -73,17 +73,19 @@ const TopNavBar = () => {
       <Toolbar>
         <ShoppingCartIcon />
         <Typography className="padding">upGrad E-shop</Typography>
-        <div className="centeredSearch">
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-        </div>
+        {userLoggedIn && (
+          <div className="centeredSearch">
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </div>
+        )}
         <div className="rightAlign">
           {!userLoggedIn ? (
             <>
@@ -92,7 +94,7 @@ const TopNavBar = () => {
                   <div className="button">Login</div>
                 </Button>
               </Link>
-              <Link to="/signUp">
+              <Link to="/signup">
                 <Button variant="text">
                   <div className="button">Sign Up</div>
                 </Button>

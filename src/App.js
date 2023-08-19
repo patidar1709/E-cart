@@ -12,6 +12,7 @@ import ProductDetail from "./components/ProductPage/ProductDetail";
 import AddProduct from "./components/ProductPage/AddProduct";
 import HomePage from "./components/ProductPage/ProductHome";
 import BuyProduct from "./components/ProductPage/BuyProduct";
+import ModifyProduct from "./components/ProductPage/ModifyProduct";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/home" Component={HomePage} />
           <Route path="/detail/:id" Component={ProductDetail} />
           <Route path="/order" Component={BuyProduct} />
+          <Route path="/edit" Component={ModifyProduct} />
           <Route path="*"> Something went wrong please contact admin </Route>
         </Routes>
       </div>

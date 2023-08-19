@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,6 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import DeleteProduct from "../DeleteProduct";
 import "./index.css";
 
 const ProductCard = ({
@@ -20,6 +21,10 @@ const ProductCard = ({
   manufacturer,
   availableItems,
 }) => {
+  const [isModalActive, setIsModalActive] = useState(false);
+  const handleDelete = () => {
+    setIsModalActive(true);
+  };
   return (
     <>
       <Card sx={{ maxWidth: 345, maxHeight: "500px" }}>
@@ -55,12 +60,33 @@ const ProductCard = ({
               </Button>
             </Link>
             <div className="edit-delete-buttons">
-              <Button size="small">
-                <EditIcon sx={{ color: "grey" }} />
-              </Button>
-              <Button size="small">
+              <Link
+                to="/edit"
+                state={{
+                  data: {
+                    id,
+                    imageUrl,
+                    name,
+                    price,
+                    description,
+                    category,
+                    manufacturer,
+                    availableItems,
+                  },
+                }}
+              >
+                <Button size="small">
+                  <EditIcon sx={{ color: "grey" }} />
+                </Button>
+              </Link>
+              <Button size="small" onClick={handleDelete}>
                 <DeleteIcon sx={{ color: "grey" }} />
               </Button>
+              <DeleteProduct
+                open={isModalActive}
+                setOpen={setIsModalActive}
+                id={id}
+              />
             </div>
           </div>
         </CardActions>

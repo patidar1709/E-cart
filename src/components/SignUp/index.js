@@ -55,7 +55,7 @@ const SignUp = () => {
     <>
       {/* lock icon for form   */}
       <LockIcon />
-      <div style={{ marginBottom: "15px" }}>Sign Up</div>
+      <div style={{ marginBottom: "15px" }}>Sign up</div>
 
       {/* form and form inpit fields */}
       <form onSubmit={handelSubmit}>
@@ -132,7 +132,11 @@ const SignUp = () => {
             width="800px"
             name="contactNumber"
           />
-          <Button variant="contained" type="submit" style={{ width: "600px" }}>
+          <Button
+            variant="contained"
+            type="submit"
+            style={{ width: "600px", backgroundColor: "#3f51b5" }}
+          >
             SIGN UP
           </Button>
           <Link to="/login">

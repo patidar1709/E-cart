@@ -33,7 +33,7 @@ const SignIn = () => {
   return (
     <>
       <LockIcon />
-      <div style={{ marginBottom: "15px" }}>Sign In</div>
+      <div style={{ marginBottom: "15px" }}>Sign in</div>
 
       {/* form for signIn */}
       <form onSubmit={handelSubmit}>
@@ -64,7 +64,11 @@ const SignIn = () => {
             name="password"
             sx={{ mb: 3, width: "600px" }}
           />
-          <Button variant="contained" type="submit" style={{ width: "600px" }}>
+          <Button
+            variant="contained"
+            type="submit"
+            style={{ width: "600px", backgroundColor: "#3f51b5" }}
+          >
             SIGN IN
           </Button>
           <Link to="/signup">

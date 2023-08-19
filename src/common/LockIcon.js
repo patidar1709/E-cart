@@ -7,7 +7,7 @@ export default function LockIcon() {
     <div
       style={{
         paddingTop: "50px",
-        paddingBottom: "2px",
+        paddingBottom: "10px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

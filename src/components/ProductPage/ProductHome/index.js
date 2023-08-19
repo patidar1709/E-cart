@@ -11,7 +11,7 @@ import "./index.css";
 
 const HomePage = () => {
   //state to save value for toggle button which is selected
-  const [toggleValue, setToggleValue] = useState("All");
+  const [toggleValue, setToggleValue] = useState("all");
 
   const dispatch = useDispatch();
 
@@ -27,14 +27,17 @@ const HomePage = () => {
     dispatch(getProductList());
   }, []);
 
+  //setting the product lis
   useEffect(() => {
     setFilteredProductList(productList);
   }, [productList]);
 
+  //if toggle button is changed render the ui again with filtered data
   useEffect(() => {
     filterProductData();
   }, [toggleValue]);
 
+  //filtering product data on basis of toggle button value
   const filterProductData = () => {
     let filterList = [];
     if (toggleValue === "all") {
@@ -47,15 +50,17 @@ const HomePage = () => {
     }
   };
 
+  //saving value of toggle button in state variable
   const handleButtonChange = (event, value) => {
     if (value != null) {
       setToggleValue(value);
     }
   };
 
+  //handeling the sorting of products
   const handleSort = (e) => {
     if (e.target.value === "default") {
-      return;
+      setFilteredProductList(productList);
     } else if (e.target.value === "phl") {
       const sortedProducts = filteredProductList
         .slice()
@@ -66,6 +71,9 @@ const HomePage = () => {
         .slice()
         .sort((a, b) => a.price - b.price);
       setFilteredProductList(sortedProducts);
+    } else if (e.target.value === "latest") {
+      const latestProducts = [...filteredProductList].reverse();
+      setFilteredProductList(latestProducts);
     }
   };
 
@@ -94,7 +102,7 @@ const HomePage = () => {
           ))}
       </ToggleButtonGroup>
       <div className="filterDiv">
-        <div className="filter">sort by</div>
+        <div className="filterText">sort by</div>
         <div className="filter">
           <FormControl
             sx={{ mb: 3, width: "200px", paddingTop: "12px" }}
@@ -112,7 +120,7 @@ const HomePage = () => {
               <MenuItem value={"default"}>Default</MenuItem>
               <MenuItem value={"plh"}>Price: low to high</MenuItem>
               <MenuItem value={"phl"}>Price: high to low</MenuItem>
-              <MenuItem value={"default"}>latest</MenuItem>
+              <MenuItem value={"latest"}>latest</MenuItem>
             </Select>
           </FormControl>
         </div>

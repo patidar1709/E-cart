@@ -15,7 +15,6 @@ const ProductDetail = () => {
   useEffect(() => {
     getProduct(id)
       .then((res) => {
-        // console.log(res);
         setProduct(res.data);
       })
       .catch((err) => {

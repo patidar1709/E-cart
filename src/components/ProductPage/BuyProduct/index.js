@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import AddAddress from "./AddAddress";
 import { useProductDataContext } from "../ProductDataContext";
+import { useToast } from "../../../common/useToast";
 import "./index.css";
 
 const steps = ["Items", "Select Address", "Confirm Order"];
@@ -29,11 +30,12 @@ const stepperIconTheme = createTheme({
 
 //component for stepper function and buy product form
 const BuyProduct = () => {
-  const [activeStep, setActiveStep] = React.useState(1);
-  const [completed, setCompleted] = React.useState({ 0: true });
+  const [activeStep, setActiveStep] = useState(1);
+  const [completed, setCompleted] = useState({ 0: true });
   const { productData } = useProductDataContext();
+  const [address, setAddress] = useState("");
   const location = useLocation();
-  console.log(":::::::::", productData);
+  const toast = useToast();
   const totalSteps = () => {
     return steps.length;
   };
@@ -51,17 +53,19 @@ const BuyProduct = () => {
   };
 
   const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
-    handleComplete();
+    if (address === "") {
+      toast.showError("Please select address");
+    } else {
+      const newActiveStep =
+        isLastStep() && !allStepsCompleted()
+          ? // It's the last step, but not all steps have been completed,
+            // find the first step that has been completed
+            steps.findIndex((step, i) => !(i in completed))
+          : activeStep + 1;
+      setActiveStep(newActiveStep);
+      handleComplete();
+    }
   };
-
-  console.log("handleNext", isLastStep());
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -104,7 +108,7 @@ const BuyProduct = () => {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
-              {activeStep === 1 && <AddAddress />}
+              {activeStep === 1 && <AddAddress setAddress={setAddress} />}
               {activeStep === 2 && (
                 <div
                   style={{

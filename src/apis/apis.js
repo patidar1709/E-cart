@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//axios interceptor
 const api = axios.create({
   baseURL: "http://localhost:8080",
   timeout: 0,
@@ -15,6 +16,7 @@ api.interceptors.request.use((config) => {
   return newConfig;
 });
 
+//login signup api
 export const login = (payload) => {
   const url = "api/auth/signin";
   return api.post(url, payload);
@@ -25,6 +27,7 @@ export const signUp = (payload) => {
   return api.post(url, payload);
 };
 
+// product api
 export const addProduct = (payload) => {
   const url = "api/products";
   return api.post(url, payload);
@@ -45,6 +48,17 @@ export const getProduct = (id) => {
   return api.get(url);
 };
 
+export const modifyProduct = (id, payload) => {
+  const url = `/api/products/${id}`;
+  return api.put(url, payload);
+};
+
+export const deleteProduct = (id) => {
+  const url = `/api/products/${id}`;
+  return api.delete(url);
+};
+
+//address api
 export const getAddress = () => {
   const url = `/api/addresses`;
   return api.get(url);

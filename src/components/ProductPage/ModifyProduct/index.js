@@ -1,16 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import { addProduct } from "../../../apis/apis";
+import { modifyProduct } from "../../../apis/apis";
+import { useLocation } from "react-router-dom";
 import { useToast } from "../../../common/useToast";
 
-// import { signUp } from "../../apis/apis";
-
-const AddProduct = () => {
+const ModifyProduct = () => {
+  const location = useLocation();
   const toast = useToast();
+  const receivedData = location.state?.data || {};
+  const {
+    id,
+    imageUrl,
+    name,
+    price,
+    description,
+    category,
+    manufacturer,
+    availableItems,
+  } = receivedData;
+  const [updateName, setName] = useState(name);
+  const [updateImageUrl, setImageUrl] = useState(imageUrl);
+  const [updatePrice, setPrice] = useState(price);
+  const [updateDescription, setDescription] = useState(description);
+  const [updateCategory, setCategory] = useState(category);
+  const [updateManufacturer, setManufacturer] = useState(manufacturer);
+  const [updateAvailableItems, setAvailableItems] = useState(availableItems);
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleImageUrl = (e) => {
+    setImageUrl(e.target.value);
+  };
+  const handlePrice = (e) => {
+    setPrice(e.target.value);
+  };
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
+  };
+  const handleCategory = (e) => {
+    setCategory(e.target.value);
+  };
+  const handleManufacturer = (e) => {
+    setManufacturer(e.target.value);
+  };
+
+  const handleAvailableItems = (e) => {
+    setAvailableItems(e.target.value);
+  };
 
   //function to call post api to signup user when form is submitted
   const handelSubmit = (e) => {
@@ -19,19 +61,25 @@ const AddProduct = () => {
     const payload = Object.fromEntries(fromProps);
     payload.price = parseInt(payload.price);
     payload.availableItems = parseInt(payload.availableItems);
-    addProduct(payload)
+    payload.id = id;
+    console.log(payload);
+    modifyProduct(id, payload)
       .then(() => {
-        toast.showSuccess("Product added successfully");
+        toast.showSuccess("Product modified successfully");
       })
       .catch(() => {
-        toast.showError("Error while adding the product please try again");
+        toast.showError(
+          "Some error occured while modifying the product plezse try again"
+        );
       });
   };
 
   return (
     <>
       {/* lock icon for form   */}
-      <h2 style={{ marginBottom: "15px", marginTop: "50px" }}>Add Product</h2>
+      <h2 style={{ marginBottom: "15px", marginTop: "50px" }}>
+        Modify Product
+      </h2>
 
       {/* form and form inpit fields */}
       <form onSubmit={handelSubmit}>
@@ -49,9 +97,11 @@ const AddProduct = () => {
             variant="outlined"
             color="secondary"
             type="text"
+            value={updateName || ""}
             sx={{ mb: 3, width: "600px" }}
             width="800px"
             name="name"
+            onChange={handleName}
           />
           <FormControl sx={{ mb: 3, width: "600px" }} size="small">
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
@@ -59,8 +109,10 @@ const AddProduct = () => {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               sx={{ height: "56px" }}
+              value={updateCategory || ""}
               label="category"
               name="category"
+              onChange={handleCategory}
             >
               <MenuItem value={"appereal"}>Appereal</MenuItem>
               <MenuItem value={"electronics"}>electronics</MenuItem>
@@ -76,6 +128,8 @@ const AddProduct = () => {
             type="text"
             sx={{ mb: 3, width: "600px" }}
             width="800px"
+            value={updateManufacturer || ""}
+            onChange={handleManufacturer}
             name="manufacturer"
           />
           <TextField
@@ -86,7 +140,9 @@ const AddProduct = () => {
             type="number"
             sx={{ mb: 3, width: "600px" }}
             width="800px"
+            value={updateAvailableItems || ""}
             name="availableItems"
+            onChange={handleAvailableItems}
           />
 
           <TextField
@@ -96,7 +152,9 @@ const AddProduct = () => {
             color="secondary"
             type="number"
             name="price"
+            value={updatePrice || ""}
             sx={{ mb: 3, width: "600px" }}
+            onChange={handlePrice}
           />
           <TextField
             label="Image URL"
@@ -105,7 +163,9 @@ const AddProduct = () => {
             type="text"
             sx={{ mb: 3, width: "600px" }}
             name="imageUrl"
+            value={updateImageUrl || ""}
             width="800px"
+            onChange={handleImageUrl}
           />
           <TextField
             label="Product Description"
@@ -114,10 +174,12 @@ const AddProduct = () => {
             type="text"
             sx={{ mb: 3, width: "600px" }}
             width="800px"
+            value={updateDescription || ""}
             name="description"
+            onChange={handleDescription}
           />
           <Button variant="contained" type="submit" style={{ width: "600px" }}>
-            Save product
+            Modify product
           </Button>
         </div>
       </form>
@@ -125,4 +187,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default ModifyProduct;

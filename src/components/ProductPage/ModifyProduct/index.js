@@ -5,12 +5,13 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { modifyProduct } from "../../../apis/apis";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useToast } from "../../../common/useToast";
 
 const ModifyProduct = () => {
   const location = useLocation();
   const toast = useToast();
+  const navigate = useNavigate();
   const receivedData = location.state?.data || {};
   const {
     id,
@@ -64,6 +65,7 @@ const ModifyProduct = () => {
     payload.id = id;
     modifyProduct(id, payload)
       .then(() => {
+        navigate("/home");
         toast.showSuccess("Product modified successfully");
       })
       .catch(() => {

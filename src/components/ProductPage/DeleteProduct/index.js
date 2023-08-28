@@ -7,7 +7,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { deleteProduct } from "../../../apis/apis";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "../../../common/useToast";
+import { getProductList } from "../../../actions/product";
+import { useDispatch } from "react-redux";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -15,6 +18,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function DeleteProduct({ open, setOpen, id }) {
   const toast = useToast();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleCancel = () => {
     setOpen(false);
   };
@@ -22,6 +27,8 @@ export default function DeleteProduct({ open, setOpen, id }) {
   const handleDelete = () => {
     deleteProduct(id)
       .then(() => {
+        navigate("/home");
+        dispatch(getProductList());
         toast.showSuccess("product deleted successfully");
         setOpen(false);
       })

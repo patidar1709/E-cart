@@ -25,6 +25,8 @@ const ProductCard = ({
   const handleDelete = () => {
     setIsModalActive(true);
   };
+
+  const userRoles = JSON.parse(localStorage.getItem("userRoles"));
   return (
     <>
       <Card sx={{ maxWidth: 345, maxHeight: "500px" }}>
@@ -59,35 +61,37 @@ const ProductCard = ({
                 BUY
               </Button>
             </Link>
-            <div className="edit-delete-buttons">
-              <Link
-                to="/edit"
-                state={{
-                  data: {
-                    id,
-                    imageUrl,
-                    name,
-                    price,
-                    description,
-                    category,
-                    manufacturer,
-                    availableItems,
-                  },
-                }}
-              >
-                <Button size="small">
-                  <EditIcon sx={{ color: "grey" }} />
+            {userRoles?.includes("ADMIN") && (
+              <div className="edit-delete-buttons">
+                <Link
+                  to="/edit"
+                  state={{
+                    data: {
+                      id,
+                      imageUrl,
+                      name,
+                      price,
+                      description,
+                      category,
+                      manufacturer,
+                      availableItems,
+                    },
+                  }}
+                >
+                  <Button size="small">
+                    <EditIcon sx={{ color: "grey" }} />
+                  </Button>
+                </Link>
+                <Button size="small" onClick={handleDelete}>
+                  <DeleteIcon sx={{ color: "grey" }} />
                 </Button>
-              </Link>
-              <Button size="small" onClick={handleDelete}>
-                <DeleteIcon sx={{ color: "grey" }} />
-              </Button>
-              <DeleteProduct
-                open={isModalActive}
-                setOpen={setIsModalActive}
-                id={id}
-              />
-            </div>
+                <DeleteProduct
+                  open={isModalActive}
+                  setOpen={setIsModalActive}
+                  id={id}
+                />
+              </div>
+            )}
           </div>
         </CardActions>
       </Card>

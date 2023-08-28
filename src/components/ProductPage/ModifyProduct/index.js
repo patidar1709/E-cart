@@ -62,14 +62,13 @@ const ModifyProduct = () => {
     payload.price = parseInt(payload.price);
     payload.availableItems = parseInt(payload.availableItems);
     payload.id = id;
-    console.log(payload);
     modifyProduct(id, payload)
       .then(() => {
         toast.showSuccess("Product modified successfully");
       })
       .catch(() => {
         toast.showError(
-          "Some error occured while modifying the product plezse try again"
+          "Some error occured while modifying the product please try again"
         );
       });
   };

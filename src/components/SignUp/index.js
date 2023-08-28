@@ -35,7 +35,7 @@ const SignUp = () => {
         toast.showSuccess("User registerd successfully. Proceed to login");
       })
       .catch((err) => {
-        toast.showSuccess(
+        toast.showError(
           "Some error occured while user registration. Please try again"
         );
       });

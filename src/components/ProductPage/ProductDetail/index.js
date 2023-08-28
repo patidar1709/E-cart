@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getProduct } from "../../../apis/apis";
 import { useParams } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
@@ -8,9 +8,7 @@ import "./index.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  //   const [productData, setProductData] = useState(null);
   const { productData, setProduct } = useProductDataContext();
-  console.log(productData);
 
   useEffect(() => {
     getProduct(id)
@@ -25,7 +23,7 @@ const ProductDetail = () => {
   return (
     <div className="container">
       <div className="image">
-        <img src={productData?.imageUrl} width="500px" />
+        <img src={productData?.imageUrl} width="500px" alt="product" />
       </div>
       <div className="content">
         <div className="div1">

@@ -20,10 +20,12 @@ const SignIn = () => {
     login(formProps)
       .then((res) => {
         //storing the auth token in locastorage to fetch it from anywhere
-        localStorage.setItem("authorization", res.data.token);
+        localStorage.setItem("authorization", res.headers["x-auth-token"]);
+        localStorage.setItem("userRoles", JSON.stringify(res.data.roles));
+        localStorage.setItem("userId", res.data.id);
+        localStorage.setItem("userEmail", res.data.email);
         //redirecting user to home page once login is successfull
         navigate("/home");
-        toast.showSuccess("Logged in successfully");
       })
       .catch((err) => {
         toast.showError("Please check user credentails");

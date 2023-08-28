@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppBar } from "@material-ui/core";
@@ -68,6 +68,8 @@ const TopNavBar = () => {
     navigate("/login");
   };
 
+  const userRoles = JSON.parse(localStorage.getItem("userRoles"));
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -107,11 +109,14 @@ const TopNavBar = () => {
                   <div className="button">Home</div>
                 </Button>
               </Link>
-              <Link to="/add/product">
-                <Button variant="text">
-                  <div className="button">Add Products</div>
-                </Button>
-              </Link>
+              {userRoles?.includes("ADMIN") && (
+                <Link to="/add/product">
+                  <Button variant="text">
+                    <div className="button">Add Products</div>
+                  </Button>
+                </Link>
+              )}
+
               <ColorButton variant="contained" onClick={handleLogout}>
                 Logout
               </ColorButton>

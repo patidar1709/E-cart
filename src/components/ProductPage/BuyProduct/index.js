@@ -11,6 +11,9 @@ import { createTheme } from "@mui/material/styles";
 import AddAddress from "./AddAddress";
 import { useProductDataContext } from "../ProductDataContext";
 import { useToast } from "../../../common/useToast";
+import { useNavigate } from "react-router-dom";
+import { orderItem } from "../../../apis/apis";
+import ProductDetail from "../ProductDetail";
 import "./index.css";
 
 const steps = ["Items", "Select Address", "Confirm Order"];
@@ -34,7 +37,8 @@ const BuyProduct = () => {
   const [completed, setCompleted] = useState({ 0: true });
   const { productData } = useProductDataContext();
   const [address, setAddress] = useState("");
-  const location = useLocation();
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
   const toast = useToast();
   const totalSteps = () => {
     return steps.length;
@@ -81,6 +85,25 @@ const BuyProduct = () => {
     setCompleted(newCompleted);
   };
 
+  const handlePlaceOrder = () => {
+    const payload = {
+      user: userId,
+      product: productData.id,
+      quantity: productData.quantity,
+      address: address.id,
+    };
+    orderItem(payload)
+      .then(() => {
+        toast.showSuccess("order placed successfully");
+        navigate("/home");
+      })
+      .catch((err) => {
+        toast.showError(
+          "Some error occured while placing order please try again after some time"
+        );
+      });
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <ThemeProvider theme={stepperIconTheme}>
@@ -108,34 +131,65 @@ const BuyProduct = () => {
         ) : (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1, py: 1 }}>
+              {activeStep === 0 && <ProductDetail />}
               {activeStep === 1 && <AddAddress setAddress={setAddress} />}
               {activeStep === 2 && (
                 <div
                   style={{
-                    width: "600px",
-                    textAlign: "left",
-                    marginLeft: "300px",
+                    display: "flex",
                   }}
                 >
-                  <h1>{productData?.name}</h1>
-                  <div className="margin">
-                    Available Quantity: {productData?.availableItems}
-                  </div>
-                  <div className="margin">
-                    Category: <b>{productData?.category}</b>
-                  </div>
-                  <div style={{ fontStyle: "italic" }} className="margin">
-                    {productData?.description}
+                  <div
+                    style={{
+                      width: "600px",
+                      textAlign: "left",
+                      marginLeft: "300px",
+                      border: "0.5px solid black",
+                    }}
+                  >
+                    <h1>{productData?.name}</h1>
+                    <div className="margin">
+                      Quantity: {productData?.quantity}
+                    </div>
+                    <div className="margin">
+                      Category: <b>{productData?.category}</b>
+                    </div>
+                    <div style={{ fontStyle: "italic" }} className="margin">
+                      {productData?.description}
+                    </div>
+                    <div
+                      style={{
+                        color: "red",
+                        fontSize: "20px",
+                        marginBottom: "100px",
+                      }}
+                    >
+                      {" "}
+                      ₹ {productData?.price}
+                    </div>
                   </div>
                   <div
                     style={{
-                      color: "red",
-                      fontSize: "20px",
-                      marginBottom: "100px",
+                      width: "600px",
+                      textAlign: "left",
+                      // marginLeft: "300px",
+                      border: "0.5px solid black",
                     }}
                   >
-                    {" "}
-                    ₹ {productData?.price}
+                    <h1>Address Details</h1>
+                    <div>{address?.street}</div>
+                    <div>Contact Number: {address?.contactNumber}</div>
+                    <div>
+                      {address?.landmark},{address?.city} <br />
+                      {address?.state}
+                    </div>
+                    <div
+                      style={{
+                        marginBottom: "100px",
+                      }}
+                    >
+                      {address?.zipcode}
+                    </div>
                   </div>
                 </div>
               )}
@@ -161,7 +215,7 @@ const BuyProduct = () => {
               ) : (
                 <Button
                   variant="contained"
-                  onClick={handleNext}
+                  onClick={handlePlaceOrder}
                   size="large"
                   style={{ width: "500" }}
                   sx={{ mr: 1, marginRight: "750px" }}

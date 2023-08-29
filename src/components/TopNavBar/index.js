@@ -68,6 +68,15 @@ const TopNavBar = () => {
     navigate("/login");
   };
 
+  const handleSearchChange = (event) => {
+    sessionStorage.setItem("serachKey", event.target.value);
+    // Dispatch a custom event
+    const searchEvent = new CustomEvent("searchEvent", {
+      detail: { value: event.target.value },
+    });
+    window.dispatchEvent(searchEvent);
+  };
+
   const userRoles = JSON.parse(localStorage.getItem("userRoles"));
 
   return (
@@ -84,6 +93,7 @@ const TopNavBar = () => {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                onChange={handleSearchChange}
               />
             </Search>
           </div>
@@ -112,7 +122,7 @@ const TopNavBar = () => {
               {userRoles?.includes("ADMIN") && (
                 <Link to="/add/product">
                   <Button variant="text">
-                    <div className="button">Add Products</div>
+                    <div className="button1">Add Products</div>
                   </Button>
                 </Link>
               )}

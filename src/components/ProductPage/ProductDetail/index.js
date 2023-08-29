@@ -20,6 +20,10 @@ const ProductDetail = () => {
       });
   }, [id]);
 
+  const handleQuantity = (e) => {
+    setProduct({ ...productData, quantity: e.target.value });
+  };
+
   return (
     <div className="container">
       <div className="image">
@@ -45,8 +49,10 @@ const ProductDetail = () => {
             color="secondary"
             type="number"
             sx={{ width: "300px" }}
+            onChange={handleQuantity}
             width="800px"
             name="quantity"
+            value={productData?.quantity || ""}
           />
         </div>
         <div style={{ textAlign: "left", paddingTop: "20px" }}>

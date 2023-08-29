@@ -69,3 +69,9 @@ export const saveAddress = (payload) => {
   const url = `/api/addresses`;
   return api.post(url, payload);
 };
+
+//order apis
+export const orderItem = (payload) => {
+  const url = `/api/orders`;
+  return api.post(url, payload);
+};

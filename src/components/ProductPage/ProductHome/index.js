@@ -12,6 +12,7 @@ import "./index.css";
 const HomePage = () => {
   //state to save value for toggle button which is selected
   const [toggleValue, setToggleValue] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
 
   const dispatch = useDispatch();
 
@@ -25,6 +26,27 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(getProductCategory());
     dispatch(getProductList());
+  }, []);
+
+  function handleSessionStorageUpdate(event) {
+    const val = event.detail.value;
+    setSearchValue(val);
+    if (val !== "") {
+      const filterList = productList.filter((product) =>
+        product.name.toLowerCase().includes(val.toLowerCase())
+      );
+      setFilteredProductList(filterList);
+    } else {
+      setFilteredProductList(productList);
+    }
+    // Perform a task based on newValue
+  }
+
+  useEffect(() => {
+    window.addEventListener("searchEvent", handleSessionStorageUpdate);
+    return () => {
+      window.removeEventListener("searchEvent", handleSessionStorageUpdate);
+    };
   }, []);
 
   //setting the product lis
@@ -128,7 +150,12 @@ const HomePage = () => {
       <div className="div">
         {filteredProductList?.length > 0 &&
           filteredProductList.map((product) => (
-            <div className="card">
+            <div
+              className="card"
+              // style={{
+              //   margin: "0 50px 0 50px",
+              // }}
+            >
               <ProductCard {...product} key={product.id} />
             </div>
           ))}

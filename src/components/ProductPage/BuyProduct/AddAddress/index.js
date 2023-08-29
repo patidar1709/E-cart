@@ -10,6 +10,7 @@ import { getAddress } from "../../../../apis/apis";
 const AddAddress = ({ setAddress }) => {
   const [addressList, setAddressList] = useState([]);
   const [keyValueAddress, setKeyValueAddress] = useState([]);
+  const userId = localStorage.getItem("userId");
 
   //api call to fetch address
   useEffect(() => {
@@ -33,7 +34,7 @@ const AddAddress = ({ setAddress }) => {
       const formattedString = Object.entries(address)
         .map(([key, value]) => `${key}: ${value}`)
         .join(", ");
-      addressListMap.push({ key: formattedString, value: formattedString });
+      addressListMap.push({ key: formattedString, value: address });
     });
     setKeyValueAddress(addressListMap);
   };
@@ -46,10 +47,11 @@ const AddAddress = ({ setAddress }) => {
     e.preventDefault();
     const fromProps = new FormData(e.target);
     const payload = Object.fromEntries(fromProps);
-    payload["user"] = "64d78759a0d98e3892383e91";
+    payload["user"] = userId;
     saveAddress(payload)
-      .then(() => {
+      .then((res) => {
         console.log("address saved");
+        console.log(res.data);
         setAddress(payload);
       })
       .catch(() => {

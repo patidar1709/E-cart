@@ -12,7 +12,6 @@ import "./index.css";
 const HomePage = () => {
   //state to save value for toggle button which is selected
   const [toggleValue, setToggleValue] = useState("all");
-  const [searchValue, setSearchValue] = useState("");
 
   const dispatch = useDispatch();
 
@@ -28,9 +27,9 @@ const HomePage = () => {
     dispatch(getProductList());
   }, []);
 
+  //function to handle search
   function handleSessionStorageUpdate(event) {
     const val = event.detail.value;
-    setSearchValue(val);
     if (val !== "") {
       const filterList = productList.filter((product) =>
         product.name.toLowerCase().includes(val.toLowerCase())
@@ -42,6 +41,7 @@ const HomePage = () => {
     // Perform a task based on newValue
   }
 
+  //subscribing to events for search
   useEffect(() => {
     window.addEventListener("searchEvent", handleSessionStorageUpdate);
     return () => {
@@ -101,6 +101,7 @@ const HomePage = () => {
 
   return (
     <>
+      {/* toggle button form*/}
       <ToggleButtonGroup
         value={toggleValue || "all"}
         exclusive
@@ -123,6 +124,8 @@ const HomePage = () => {
             </ToggleButton>
           ))}
       </ToggleButtonGroup>
+
+      {/* form for sorting the data*/}
       <div className="filterDiv">
         <div className="filterText">sort by</div>
         <div className="filter">
@@ -147,15 +150,11 @@ const HomePage = () => {
           </FormControl>
         </div>
       </div>
+      {/* rendering products by looping over filter product list and calling productCard component*/}
       <div className="div">
         {filteredProductList?.length > 0 &&
           filteredProductList.map((product) => (
-            <div
-              className="card"
-              // style={{
-              //   margin: "0 50px 0 50px",
-              // }}
-            >
+            <div className="card">
               <ProductCard {...product} key={product.id} />
             </div>
           ))}

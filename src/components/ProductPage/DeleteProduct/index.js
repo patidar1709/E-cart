@@ -24,6 +24,7 @@ export default function DeleteProduct({ open, setOpen, id }) {
     setOpen(false);
   };
 
+  //calling delete api to delete product
   const handleDelete = () => {
     deleteProduct(id)
       .then(() => {

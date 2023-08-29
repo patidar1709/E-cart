@@ -1,3 +1,4 @@
+// product reducer implementation
 import { createReducer } from "@reduxjs/toolkit";
 
 import {
@@ -6,6 +7,7 @@ import {
   productError,
 } from "../actions/product";
 
+//inital values for store
 const initialState = {
   categories: [],
   productList: [],
@@ -14,6 +16,7 @@ const initialState = {
   },
 };
 
+//switch case to update values in redux store
 const productReducer = createReducer(initialState, {
   [productCategoryAction]: (state, action) => {
     state.categories = action.payload;

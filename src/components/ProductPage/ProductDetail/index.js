@@ -10,6 +10,7 @@ const ProductDetail = () => {
   const { id } = useParams();
   const { productData, setProduct } = useProductDataContext();
 
+  //fetching product information using getProduct api call
   useEffect(() => {
     getProduct(id)
       .then((res) => {
@@ -20,6 +21,7 @@ const ProductDetail = () => {
       });
   }, [id]);
 
+  //modifying the product data and adding quatity in it
   const handleQuantity = (e) => {
     setProduct({ ...productData, quantity: e.target.value });
   };

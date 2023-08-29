@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { IsUserLoogedIn } from "../../common/IsUserLoogedIn";
 import "./index.css";
 
+//desings for search button
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -68,15 +69,16 @@ const TopNavBar = () => {
     navigate("/login");
   };
 
+  //dispatching a custom event whenever values in search box are changed
   const handleSearchChange = (event) => {
     sessionStorage.setItem("serachKey", event.target.value);
-    // Dispatch a custom event
     const searchEvent = new CustomEvent("searchEvent", {
       detail: { value: event.target.value },
     });
     window.dispatchEvent(searchEvent);
   };
 
+  //fetching user role from local storage
   const userRoles = JSON.parse(localStorage.getItem("userRoles"));
 
   return (
@@ -84,6 +86,7 @@ const TopNavBar = () => {
       <Toolbar>
         <ShoppingCartIcon />
         <Typography className="padding">upGrad E-shop</Typography>
+        {/* If user is login then we will show him search button*/}
         {userLoggedIn && (
           <div className="centeredSearch">
             <Search>
@@ -98,6 +101,7 @@ const TopNavBar = () => {
             </Search>
           </div>
         )}
+        {/* If user has not logged in then we will show login and signup button else home and logout button*/}
         <div className="rightAlign">
           {!userLoggedIn ? (
             <>
@@ -119,6 +123,7 @@ const TopNavBar = () => {
                   <div className="button">Home</div>
                 </Button>
               </Link>
+              {/* if role of user is admin then we will show add products page */}
               {userRoles?.includes("ADMIN") && (
                 <Link to="/add/product">
                   <Button variant="text">

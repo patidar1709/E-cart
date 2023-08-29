@@ -27,7 +27,8 @@ const SignUp = () => {
     }
     const data = new FormData(e.target);
     const payload = Object.fromEntries(data);
-    payload.role = ["USER"];
+    payload.role = ["USER"]; //providing role as USER when someone signs up on platform
+
     //calling signup api and showing success or error msg on basis of the response of Api
     signUp(payload)
       .then((res) => {

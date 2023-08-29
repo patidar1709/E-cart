@@ -31,6 +31,7 @@ const ModifyProduct = () => {
   const [updateManufacturer, setManufacturer] = useState(manufacturer);
   const [updateAvailableItems, setAvailableItems] = useState(availableItems);
 
+  //handlers to set form data
   const handleName = (e) => {
     setName(e.target.value);
   };

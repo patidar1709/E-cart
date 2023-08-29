@@ -56,6 +56,7 @@ const BuyProduct = () => {
     return completedSteps() === totalSteps();
   };
 
+  //function is called when user click on next button
   const handleNext = () => {
     if (address === "") {
       toast.showError("Please select address");
@@ -85,6 +86,7 @@ const BuyProduct = () => {
     setCompleted(newCompleted);
   };
 
+  //when user clicks on place order button we call orderItem api to place order
   const handlePlaceOrder = () => {
     const payload = {
       user: userId,

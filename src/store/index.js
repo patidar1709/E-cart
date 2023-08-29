@@ -1,3 +1,4 @@
+//root reducer and redux store setup
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import productReducer from "../reducers/product.reducer";

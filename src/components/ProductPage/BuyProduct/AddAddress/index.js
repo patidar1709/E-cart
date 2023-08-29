@@ -43,6 +43,7 @@ const AddAddress = ({ setAddress }) => {
     setAddress(e.target.value);
   };
 
+  //when user clicks on submit we call save address api to save data in database
   const handelSubmit = (e) => {
     e.preventDefault();
     const fromProps = new FormData(e.target);
@@ -82,10 +83,6 @@ const AddAddress = ({ setAddress }) => {
             {keyValueAddress?.map((add) => (
               <MenuItem value={add.value}>{add.key}</MenuItem>
             ))}
-            {/* <MenuItem value={"default"}>Default</MenuItem>
-            <MenuItem value={"plh"}>Price: low to high</MenuItem>
-            <MenuItem value={"phl"}>Price: high to low</MenuItem>
-            <MenuItem value={"default"}>latest</MenuItem> */}
           </Select>
         </FormControl>
       </div>
